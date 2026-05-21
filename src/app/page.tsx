@@ -24,7 +24,12 @@ type Transaction = {
   category: string;
   created_at: string;
 };
-
+type Budget = {
+  id: string;
+  name: string;
+  amount: number;
+  user_id: string;
+};
 /**
  * Home - Main dashboard component for the budget tracker
  * Displays user's financial overview including transactions, budgets, and AI insights
@@ -35,7 +40,7 @@ export default function Home() {
   const [user, setUser] = useState<any>(null);
   const [insight, setInsight] = useState("");
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [budgets, setBudgets] = useState([]);
+  const [budgets, setBudgets] = useState<Budget[]>([]);
   const [insightLoading, setInsightLoading] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [selectedTransaction, setSelectedTransaction] =
