@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-
+import { Budget } from "@/types/budget.type";
 import Header from "@/components/Header";
 import DashboardCards from "@/components/DashboardCards";
 import TransactionList from "@/components/TransactionList";
@@ -15,21 +15,9 @@ import MonthlyAnalytics from "@/components/MonthlyAnalytics";
 import EditTransactionModal from "@/components/EditTransactionModal";
 import ExportButtons from "@/components/ExportButtons";
 import ImportExport from "@/components/ImportExport";
+import { Transaction } from "@/types/transactions.type";
 
-type Transaction = {
-  id: string;
-  amount: number;
-  note: string;
-  type: string;
-  category: string;
-  created_at?: string;
-};
-type Budget = {
-  id: string;
-  name: string;
-  amount: number;
-  user_id: string;
-};
+
 /**
  * Home - Main dashboard component for the budget tracker
  * Displays user's financial overview including transactions, budgets, and AI insights

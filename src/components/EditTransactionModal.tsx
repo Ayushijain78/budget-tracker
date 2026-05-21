@@ -1,14 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Transaction } from "@/types/transactions.type";
 
-type Transaction = {
-  id: string;
-  amount: number;
-  note: string;
-  type: string;
-  category: string;
-};
 
 interface Props {
   transaction: Transaction | null;
@@ -67,6 +61,7 @@ export default function EditTransactionModal({
     return null;
 
   async function handleSave() {
+    if (!transaction) return;
     await onSave(transaction.id, {
       amount: Number(amount),
       note,

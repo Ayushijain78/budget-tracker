@@ -2,14 +2,7 @@
 
 import Papa from "papaparse";
 import { categorizeTransaction } from "@/utils/categorizeTransaction";
-
-type Transaction = {
-  amount: number;
-  note: string;
-  type: string;
-  category: string;
-  created_at?: string;
-};
+import { Transaction } from "@/types/transactions.type";
 
 interface Props {
   onImport: (transactions: Transaction[]) => Promise<void>;

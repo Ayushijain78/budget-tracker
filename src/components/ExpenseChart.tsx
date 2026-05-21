@@ -7,13 +7,8 @@ import {
   Cell,
   ResponsiveContainer,
 } from "recharts";
+import { Transaction } from "@/types/transactions.type";
 
-type Transaction = {
-  id: string;
-  amount: number;
-  category: string;
-  type: string;
-};
 
 interface Props {
   transactions: Transaction[];

@@ -1,13 +1,5 @@
-type Budget = {
-  category: string;
-  limit_amount: number;
-};
-
-type Transaction = {
-  amount: number;
-  category: string;
-  type: string;
-};
+import { Budget } from "@/types/budget.type";
+import { Transaction } from "@/types/transactions.type";
 
 interface Props {
   budgets: Budget[];

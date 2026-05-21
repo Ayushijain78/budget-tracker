@@ -1,10 +1,4 @@
-type Transaction = {
-  id: string;
-  amount: number;
-  note: string;
-  type: string;
-  category: string;
-};
+import { Transaction } from "@/types/transactions.type";
 
 interface Props {
   transactions: Transaction[];
