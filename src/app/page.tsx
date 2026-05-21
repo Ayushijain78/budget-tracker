@@ -22,7 +22,7 @@ type Transaction = {
   note: string;
   type: string;
   category: string;
-  created_at: string;
+  created_at?: string;
 };
 type Budget = {
   id: string;
