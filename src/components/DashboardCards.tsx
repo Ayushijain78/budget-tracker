@@ -33,7 +33,7 @@ export default function DashboardCards({
         >
           <p className="text-gray-500 dark:text-gray-300  text-sm">{card.title}</p>
 
-          <h2 className="text-2xl font-bold mt-2">
+          <h2 className="text-xl sm:text-2xl font-bold mt-2">
             ₹{card.value}
           </h2>
         </div>

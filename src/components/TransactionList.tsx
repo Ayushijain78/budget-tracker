@@ -13,7 +13,7 @@ export default function TransactionList({
 }: Props) {
   if (transactions.length === 0) {
     return (
-      <div className="bg-white dark:bg-gray-800 dark:bg-gray-800 rounded-2xl p-6 shadow text-gray-500 border dark:border-gray-700 mt-6">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow text-gray-500 border dark:border-gray-700 mt-6">
         <p className="text-gray-500 dark:text-gray-300  text-center">
           No transactions yet
         </p>
@@ -22,10 +22,12 @@ export default function TransactionList({
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 dark:bg-gray-800 rounded-2xl p-5 shadow text-gray-500 border dark:border-gray-700 mt-6">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow text-gray-500 border dark:border-gray-700 mt-6">
       <h2 className="text-xl font-semibold mb-4">Recent Transactions</h2>
 
       <div className="space-y-4">
+        <div className="overflow-x-auto">
+
         {transactions.map((transaction) => (
           <div
             key={transaction.id}
@@ -51,7 +53,7 @@ export default function TransactionList({
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-6">
               <h3
                 className={`font-bold text-lg ${
                   transaction.type === "income"
@@ -77,6 +79,7 @@ export default function TransactionList({
             </div>
           </div>
         ))}
+        </div>
       </div>
     </div>
   );

@@ -82,7 +82,7 @@ export default function AddTransactionForm({
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 dark:bg-gray-800 rounded-2xl p-5 shadow text-gray-500 border dark:border-gray-700 mb-6">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow text-gray-500 border dark:border-gray-700 mb-6">
       <h2 className="text-xl font-semibold mb-4">
         Add Transaction
       </h2>
@@ -95,7 +95,7 @@ export default function AddTransactionForm({
           onChange={(e) =>
             setAmount(e.target.value)
           }
-          className="text-gray-500 border dark:border-gray-700 rounded-xl p-3 outline-none"
+          className="text-gray-500 border dark:border-gray-700 rounded-xl p-6 outline-none"
         />
 
         <input
@@ -105,7 +105,7 @@ export default function AddTransactionForm({
           onChange={(e) =>
             handleNoteChange(e.target.value)
           }
-          className="text-gray-500 border dark:border-gray-700 rounded-xl p-3 outline-none"
+          className="text-gray-500 border dark:border-gray-700 rounded-xl p-6 outline-none"
         />
 
         <select
@@ -113,7 +113,7 @@ export default function AddTransactionForm({
           onChange={(e) =>
             setType(e.target.value)
           }
-          className="text-gray-500 border dark:border-gray-700 rounded-xl p-3 outline-none"
+          className="text-gray-500 border dark:border-gray-700 rounded-xl p-6 outline-none"
         >
           <option value="expense">
             Expense

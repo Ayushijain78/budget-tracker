@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -14,8 +15,8 @@ export default function Login() {
       password,
     });
 
-    if (error) alert(error.message);
-    else alert("Check your email!");
+    if (error) toast.error(error.message);
+    else toast.success("Check your email!");
   };
 
   const signIn = async () => {
@@ -25,21 +26,21 @@ export default function Login() {
     });
 
     if (error) {
-      alert(error.message);
+      toast.error(error.message);
     } else {
       router.push("/"); // ✅ go to dashboard
     }
   };
-useEffect(() => {
-  const checkUser = async () => {
-    const { data } = await supabase.auth.getUser();
-    if (data.user) {
-      router.push("/");
-    }
-  };
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      if (data.user) {
+        router.push("/");
+      }
+    };
 
-  checkUser();
-}, []);
+    checkUser();
+  }, []);
   return (
     <div className="p-6 max-w-md mx-auto">
       <h1 className="text-xl font-bold mb-4">Login</h1>
@@ -61,7 +62,10 @@ useEffect(() => {
         Login
       </button>
 
-      <button onClick={signUp} className="text-gray-500 border dark:border-gray-700 w-full p-2">
+      <button
+        onClick={signUp}
+        className="text-gray-500 border dark:border-gray-700 w-full p-2"
+      >
         Sign Up
       </button>
     </div>

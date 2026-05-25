@@ -15,8 +15,13 @@ import MonthlyAnalytics from "@/components/MonthlyAnalytics";
 import EditTransactionModal from "@/components/EditTransactionModal";
 import ExportButtons from "@/components/ExportButtons";
 import ImportExport from "@/components/ImportExport";
-import { Transaction } from "@/types/transactions.type";
+import RecurringTransactions from "@/components/RecurringTransactions";
+import TransactionFilters from "@/components/TransactionFilters";
+import DashboardSkeleton from "@/components/DashboardSkeleton";
+import toast from "react-hot-toast";
 
+import { detectRecurringTransactions } from "@/utils/detectRecurring";
+import { Transaction } from "@/types/transactions.type";
 
 /**
  * Home - Main dashboard component for the budget tracker
@@ -33,7 +38,13 @@ export default function Home() {
   const [editOpen, setEditOpen] = useState(false);
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null);
-
+  const [search, setSearch] = useState("");
+  const [filterCategory, setFilterCategory] = useState("All");
+  const [filterType, setFilterType] = useState("All");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const recurringTransactions = detectRecurringTransactions(transactions);
+  const [loading, setLoading] = useState(true);
   /**
    * Fetches all budgets for the current user from Supabase
    * @param userId - The ID of the user whose budgets to fetch
@@ -68,6 +79,7 @@ export default function Home() {
       .eq("user_id", userId)
       .order("created_at", { ascending: false });
     setTransactions(data || []);
+    setLoading(false);
   };
 
   /**
@@ -76,7 +88,7 @@ export default function Home() {
    * @param importedTransactions - Array of transactions to import
    * Refreshes the transactions list after successful import
    */
-  async function importTransactions(importedTransactions: any[]) {
+  async function importTransactions(importedTransactions: any[]): Promise<void> {
     if (!user?.id) return;
 
     const formatted = importedTransactions.map((t) => ({
@@ -87,7 +99,7 @@ export default function Home() {
     const { error } = await supabase.from("transactions").insert(formatted);
 
     if (error) {
-      alert("Import failed");
+      toast.error("Import failed");
       return;
     }
 
@@ -271,9 +283,42 @@ export default function Home() {
       </div>
     );
   }
+  function clearFilters() {
+    setSearch("");
+    setFilterCategory("All");
+    setFilterType("All");
+    setStartDate("");
+    setEndDate("");
+  }
+  const filteredTransactions = transactions.filter((t) => {
+    // Search
+    const matchesSearch = t.note.toLowerCase().includes(search.toLowerCase());
+
+    // Category
+    const matchesCategory =
+      filterCategory === "All" || t.category === filterCategory;
+
+    // Type
+    const matchesType = filterType === "All" || t.type === filterType;
+
+    // Date
+    const transactionDate = new Date(t.created_at);
+
+    const matchesStart = !startDate || transactionDate >= new Date(startDate);
+
+    const matchesEnd = !endDate || transactionDate <= new Date(endDate);
+
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      matchesType &&
+      matchesStart &&
+      matchesEnd
+    );
+  });
   return (
     <div className="min-h-screen text-black dark:text-white bg-gray-100 dark:bg-gray-900 p-6">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4">
         <DashboardCards income={totalIncome} expense={totalExpense} />
 
         <Header email={user.email} />
@@ -288,8 +333,21 @@ export default function Home() {
               No transactions yet
             </p>
           )}
+          <TransactionFilters
+            search={search}
+            setSearch={setSearch}
+            category={filterCategory}
+            setCategory={setFilterCategory}
+            type={filterType}
+            setType={setFilterType}
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
+            clearFilters={clearFilters}
+          />
           <TransactionList
-            transactions={transactions}
+            transactions={filteredTransactions}
             onDelete={deleteTransaction}
             onEdit={(transaction) => {
               setSelectedTransaction(transaction);
@@ -313,6 +371,7 @@ export default function Home() {
               loading={insightLoading}
               onGenerate={generateInsights}
             />
+            <RecurringTransactions recurring={recurringTransactions} />
             <MonthlyAnalytics transactions={transactions} />
             <ImportExport onImport={importTransactions} />
             <ExportButtons transactions={transactions} />

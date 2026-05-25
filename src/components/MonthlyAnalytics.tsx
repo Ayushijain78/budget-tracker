@@ -100,7 +100,7 @@ export default function MonthlyAnalytics({
             This Month
           </p>
 
-          <h3 className="text-2xl font-bold mt-2 dark:text-white">
+          <h3 className="text-xl sm:text-2xl font-bold mt-2 dark:text-white">
             ₹{currentTotal}
           </h3>
         </div>
@@ -111,7 +111,7 @@ export default function MonthlyAnalytics({
           </p>
 
           <h3
-            className={`text-2xl font-bold mt-2 ${
+            className={`text-xl sm:text-2xl font-bold mt-2 ${
               Number(growth) > 0
                 ? "text-red-500"
                 : "text-green-500"
@@ -126,7 +126,7 @@ export default function MonthlyAnalytics({
             Top Category
           </p>
 
-          <h3 className="text-2xl font-bold mt-2 dark:text-white">
+          <h3 className="text-xl sm:text-2xl font-bold mt-2 dark:text-white">
             {topCategory}
           </h3>
         </div>

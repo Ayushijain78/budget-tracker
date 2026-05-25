@@ -44,7 +44,7 @@ export default function AddBudgetForm({
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 dark:bg-gray-800 rounded-2xl p-5 shadow text-gray-500 border dark:border-gray-700 mt-6">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow text-gray-500 border dark:border-gray-700 mt-6">
       <h2 className="text-xl font-semibold mb-4">
         Set Budget
       </h2>
@@ -55,7 +55,7 @@ export default function AddBudgetForm({
           onChange={(e) =>
             setCategory(e.target.value)
           }
-          className="text-gray-500 border dark:border-gray-700 rounded-xl p-3"
+          className="text-gray-500 border dark:border-gray-700 rounded-xl p-6"
         >
           {categories.map((cat) => (
             <option key={cat}>
@@ -71,7 +71,7 @@ export default function AddBudgetForm({
           onChange={(e) =>
             setLimitAmount(e.target.value)
           }
-          className="text-gray-500 border dark:border-gray-700 rounded-xl p-3"
+          className="text-gray-500 border dark:border-gray-700 rounded-xl p-6"
         />
 
         <button

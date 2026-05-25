@@ -41,7 +41,7 @@ export default function ExportButtons({ transactions }: Props) {
   }
 
   return (
-    <div className="flex gap-3 mt-6">
+    <div className="flex flex-col sm:flex-row gap-6 mt-6">
       <button
         onClick={exportCSV}
         className="bg-green-600 text-white px-4 py-2 rounded-xl"

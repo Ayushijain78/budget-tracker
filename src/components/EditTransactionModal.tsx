@@ -75,7 +75,7 @@ export default function EditTransactionModal({
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
       <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md shadow-xl">
-        <h2 className="text-2xl font-bold mb-5 dark:text-white">
+        <h2 className="text-xl sm:text-2xl font-bold mb-5 dark:text-white">
           Edit Transaction
         </h2>
 
@@ -86,7 +86,7 @@ export default function EditTransactionModal({
             onChange={(e) =>
               setAmount(e.target.value)
             }
-            className="w-full border dark:border-gray-700 rounded-xl p-3 bg-white dark:bg-gray-700 dark:text-white"
+            className="w-full border dark:border-gray-700 rounded-xl p-6 bg-white dark:bg-gray-700 dark:text-white"
           />
 
           <input
@@ -95,7 +95,7 @@ export default function EditTransactionModal({
             onChange={(e) =>
               setNote(e.target.value)
             }
-            className="w-full border dark:border-gray-700 rounded-xl p-3 bg-white dark:bg-gray-700 dark:text-white"
+            className="w-full border dark:border-gray-700 rounded-xl p-6 bg-white dark:bg-gray-700 dark:text-white"
           />
 
           <select
@@ -103,7 +103,7 @@ export default function EditTransactionModal({
             onChange={(e) =>
               setType(e.target.value)
             }
-            className="w-full border dark:border-gray-700 rounded-xl p-3 bg-white dark:bg-gray-700 dark:text-white"
+            className="w-full border dark:border-gray-700 rounded-xl p-6 bg-white dark:bg-gray-700 dark:text-white"
           >
             <option value="expense">
               Expense
@@ -119,7 +119,7 @@ export default function EditTransactionModal({
             onChange={(e) =>
               setCategory(e.target.value)
             }
-            className="w-full border dark:border-gray-700 rounded-xl p-3 bg-white dark:bg-gray-700 dark:text-white"
+            className="w-full border dark:border-gray-700 rounded-xl p-6 bg-white dark:bg-gray-700 dark:text-white"
           >
             {categories.map((cat) => (
               <option key={cat}>
@@ -128,7 +128,7 @@ export default function EditTransactionModal({
             ))}
           </select>
 
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex justify-end gap-6 pt-2">
             <button
               onClick={onClose}
               className="border px-4 py-2 rounded-xl dark:text-white"

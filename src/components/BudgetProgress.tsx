@@ -11,7 +11,7 @@ export default function BudgetProgress({
   transactions,
 }: Props) {
   return (
-    <div className="bg-white dark:bg-gray-800 dark:bg-gray-800 rounded-2xl p-5 shadow text-gray-500 border dark:border-gray-700 mt-6">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow text-gray-500 border dark:border-gray-700 mt-6">
       <h2 className="text-xl font-semibold mb-4">
         Budget Limits
       </h2>
