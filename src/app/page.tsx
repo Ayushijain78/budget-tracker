@@ -18,6 +18,7 @@ import ImportExport from "@/components/ImportExport";
 import RecurringTransactions from "@/components/RecurringTransactions";
 import TransactionFilters from "@/components/TransactionFilters";
 import DashboardSkeleton from "@/components/DashboardSkeleton";
+import AIChatWidget from "@/components/chat/AIChatWidget";
 import toast from "react-hot-toast";
 
 import { detectRecurringTransactions } from "@/utils/detectRecurring";
@@ -88,7 +89,9 @@ export default function Home() {
    * @param importedTransactions - Array of transactions to import
    * Refreshes the transactions list after successful import
    */
-  async function importTransactions(importedTransactions: any[]): Promise<void> {
+  async function importTransactions(
+    importedTransactions: any[],
+  ): Promise<void> {
     if (!user?.id) return;
 
     const formatted = importedTransactions.map((t) => ({
@@ -265,13 +268,25 @@ export default function Home() {
 
       if (data.user) {
         setUser(data.user);
-        fetchTransactions(data.user.id); // pass id
-        fetchBudgets(data.user.id);
+        fetchTransactions(data.user.id);
       }
+
+      setLoading(false);
     };
 
     getUser();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-500">Loading...</p>
+      </div>
+    );
+  }
+  if (loading) {
+    return <DashboardSkeleton />;
+  }
 
   if (!user) {
     return (
@@ -319,11 +334,9 @@ export default function Home() {
   return (
     <div className="min-h-screen text-black dark:text-white bg-gray-100 dark:bg-gray-900 p-6">
       <div className="max-w-7xl mx-auto px-2 sm:px-4">
-        <DashboardCards income={totalIncome} expense={totalExpense} />
-
         <Header email={user.email} />
+        <DashboardCards income={totalIncome} expense={totalExpense} />
         <AddTransactionForm onAdd={handleAddTransaction} />
-
         {/* Transaction List */}
         <div>
           <h2 className="font-semibold mb-2">Transactions</h2>
@@ -386,6 +399,7 @@ export default function Home() {
         onClose={() => setEditOpen(false)}
         onSave={updateTransaction}
       />
+      <AIChatWidget transactions={transactions} />
     </div>
   );
 }

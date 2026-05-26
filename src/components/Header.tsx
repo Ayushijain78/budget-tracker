@@ -34,6 +34,12 @@ export default function Header({ email }: Props) {
 
             <p className="font-medium">{email}</p>
           </div>
+          <button
+            onClick={handleLogout}
+            className="bg-black text-white px-4 py-2 rounded-xl"
+          >
+            Logout
+          </button>
           <a
             href="/analytics"
             className="bg-black text-white px-4 py-2 rounded-xl"
@@ -41,17 +47,12 @@ export default function Header({ email }: Props) {
             Analytics
           </a>
           <button
-            onClick={handleLogout}
-            className="bg-black text-white px-4 py-2 rounded-xl"
-          >
-            Logout
-          </button>
-          <button
             onClick={toggleDarkMode}
             className="text-gray-500 border dark:border-gray-700 px-4 py-2 rounded-xl"
           >
             {darkMode ? "☀️" : "🌙"}
           </button>
+          
         </div>
       </div>
     </div>

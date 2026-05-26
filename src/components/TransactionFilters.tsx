@@ -54,7 +54,7 @@ export default function TransactionFilters({
 }: Props) {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow border dark:border-gray-700 mt-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3">
         {/* Search */}
         <input
           type="text"
@@ -65,7 +65,7 @@ export default function TransactionFilters({
               e.target.value
             )
           }
-          className="border rounded-xl px-3 py-2 flex-1 min-w-[220px] dark:bg-gray-700 dark:text-white"
+          className="lg:col-span-2 border rounded-xl px-3 py-2 flex-1 dark:bg-gray-700 dark:text-white"
         />
 
         {/* Category */}
@@ -76,7 +76,7 @@ export default function TransactionFilters({
               e.target.value
             )
           }
-          className="border rounded-xl px-3 py-2 dark:bg-gray-700 dark:text-white"
+          className="lg:col-span-2 border rounded-xl px-3 py-2 dark:bg-gray-700 dark:text-white"
         >
           {categories.map((cat) => (
             <option
@@ -96,7 +96,7 @@ export default function TransactionFilters({
               e.target.value
             )
           }
-          className="border rounded-xl px-3 py-2 dark:bg-gray-700 dark:text-white"
+          className="lg:col-span-2 border rounded-xl px-3 py-2 dark:bg-gray-700 dark:text-white"
         >
           <option value="All">
             All Types
@@ -120,7 +120,7 @@ export default function TransactionFilters({
               e.target.value
             )
           }
-          className="border rounded-xl px-3 py-2 dark:bg-gray-700 dark:text-white"
+          className="lg:col-span-2 border rounded-xl px-3 py-2 dark:bg-gray-700 dark:text-white"
         />
 
         {/* End Date */}
@@ -132,13 +132,13 @@ export default function TransactionFilters({
               e.target.value
             )
           }
-          className="border rounded-xl px-3 py-2 dark:bg-gray-700 dark:text-white"
+          className="lg:col-span-2 border rounded-xl px-3 py-2 dark:bg-gray-700 dark:text-white"
         />
 
         {/* Clear */}
         <button
           onClick={clearFilters}
-          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl"
+          className="lg:col-span-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl"
         >
           Clear
         </button>
