@@ -1,9 +1,9 @@
-import * as pdfjsLib from "pdfjs-dist";
-
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-  "/pdf.worker.min.mjs";
-
 export async function extractPdfText(file: File) {
+  const pdfjsLib = await import("pdfjs-dist");
+
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "/pdf.worker.min.mjs";
+
   const arrayBuffer = await file.arrayBuffer();
 
   const pdf = await pdfjsLib.getDocument({
@@ -17,11 +17,10 @@ export async function extractPdfText(file: File) {
 
     const textContent = await page.getTextContent();
 
-    const pageText = textContent.items
-      .map((item: any) => item.str)
-      .join(" ");
-
-    fullText += pageText + "\n";
+    fullText +=
+      textContent.items
+        .map((item: any) => item.str)
+        .join(" ") + "\n";
   }
 
   return fullText;

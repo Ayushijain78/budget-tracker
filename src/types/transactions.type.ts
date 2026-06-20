@@ -3,6 +3,7 @@ export type Transaction = {
   amount: number;
   note: string;
   type: string;
+  date: string;
   category: string;
   created_at: string;
 };

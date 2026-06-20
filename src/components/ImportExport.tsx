@@ -8,6 +8,11 @@ import toast from "react-hot-toast";
 interface Props {
   onImport: (transactions: Transaction[]) => Promise<void>;
 }
+interface AIResponse {
+  type: string;
+  category: string;
+  date: string;
+}
 
 export default function ImportExport({ onImport }: Props) {
   const [previewData, setPreviewData] = useState<any[]>([]);
@@ -34,53 +39,55 @@ export default function ImportExport({ onImport }: Props) {
   }
 
   // ✅ Upload CSV
-  function handleCSVUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
+  // function handleCSVUpload(e: React.ChangeEvent<HTMLInputElement>) {
+  //   const file = e.target.files?.[0];
 
-    if (!file) return;
+  //   if (!file) return;
 
-    Papa.parse(file, {
-      header: true,
+  //   Papa.parse(file, {
+  //     header: true,
 
-      complete: async (results: any) => {
-        const formattedData = results.data
-          .filter((row: any) => {
-            return Object.values(row).some((val) => val);
-          })
-          .map((row: any) => {
-            // ✅ FULL FORMAT CSV
-            if (row.amount || row.note) {
-              return {
-                amount: Number(row.amount || 0),
-                note: row.note || "",
-                type: row.type || "expense",
-                category: row.category || "Other",
-                created_at: row.date || new Date().toISOString(),
-              };
-            }
+  //     complete: async (results: any) => {
+  //       const formattedData = results.data
+  //         .filter((row: any) => {
+  //           return Object.values(row).some((val) => val);
+  //         })
+  //         .map((row: any) => {
+  //           // ✅ FULL FORMAT CSV
+  //           if (row.amount || row.note) {
+  //             return {
+  //               amount: Number(row.amount || 0),
+  //               note: row.note || "",
+  //               type: row.type || "expense",
+  //               category: row.category || "Other",
+  //               date: row.date || new Date().toISOString(),
+  //               created_at: row.date || new Date().toISOString(),
+  //             };
+  //           }
 
-            // ✅ SIMPLE CSV FORMAT
-            const values = Object.values(row);
+  //           // ✅ SIMPLE CSV FORMAT
+  //           const values = Object.values(row);
 
-            const note = String(values[0] || "");
+  //           const note = String(values[0] || "");
 
-            const amount = Number(values[1] || 0);
+  //           const amount = Number(values[1] || 0);
 
-            const aiData = categorizeTransaction(note);
+  //           const aiData: AIResponse = categorizeTransaction(note);
 
-            return {
-              note,
-              amount,
-              type: aiData.type,
-              category: aiData.category,
-              created_at: new Date().toISOString(),
-            };
-          });
+  //           return {
+  //             note,
+  //             amount,
+  //             type: aiData.type,
+  //             category: aiData.category,
+  //             date: aiData.date || new Date().toISOString(),
+  //             created_at: new Date().toISOString(),
+  //           };
+  //         });
 
-        setPreviewData(formattedData);
-      },
-    });
-  }
+  //       setPreviewData(formattedData);
+  //     },
+  //   });
+  // }
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow border dark:border-gray-700 mt-6 w-full">
@@ -89,7 +96,7 @@ export default function ImportExport({ onImport }: Props) {
       </h2>
 
       {/* Buttons */}
-      <div className="flex flex-wrap gap-6 mb-6">
+      {/* <div className="flex flex-wrap gap-6 mb-6">
         <button
           onClick={downloadSampleCSV}
           className="bg-blue-600 hover:bg-blue-700 transition text-white px-4 py-2 rounded-xl"
@@ -106,7 +113,7 @@ export default function ImportExport({ onImport }: Props) {
             className="hidden"
           />
         </label>
-      </div>
+      </div> */}
 
       {/* Preview Table */}
       {previewData.length > 0 && (

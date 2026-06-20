@@ -49,7 +49,7 @@ export default function Home() {
   const [endDate, setEndDate] = useState("");
   const recurringTransactions = detectRecurringTransactions(transactions);
   const [parsedTransactions, setParsedTransactions] = useState([]);
-const [showPreview, setShowPreview] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
   const [loading, setLoading] = useState(true);
   /**
    * Fetches all budgets for the current user from Supabase
@@ -113,12 +113,8 @@ const [showPreview, setShowPreview] = useState(false);
 
     fetchTransactions(user.id);
   }
-async function handleImportTransactions(
-  transactions: any[],
-) {
-  const { error } = await supabase
-    .from("transactions")
-    .insert(
+  async function handleImportTransactions(transactions: any[]) {
+    const { error } = await supabase.from("transactions").insert(
       transactions.map((t) => ({
         amount: t.amount,
         note: t.note,
@@ -130,21 +126,19 @@ async function handleImportTransactions(
       })),
     );
 
-  if (error) {
-    console.error(error);
-    alert("Import failed");
-    return;
+    if (error) {
+      console.error(error);
+      alert("Import failed");
+      return;
+    }
+
+    alert(`${transactions.length} transactions imported successfully`);
+
+    setShowPreview(false);
+    setParsedTransactions([]);
+
+    fetchTransactions(user.id);
   }
-
-  alert(
-    `${transactions.length} transactions imported successfully`,
-  );
-
-  setShowPreview(false);
-  setParsedTransactions([]);
-
-  fetchTransactions(user.id);
-}
   /**
    * Updates an existing transaction with new data
    * @param id - The ID of the transaction to update
@@ -344,7 +338,8 @@ async function handleImportTransactions(
   }
   const filteredTransactions = transactions.filter((t) => {
     // Search
-    const matchesSearch = t?.note?.toLowerCase().includes(search.toLowerCase())||"";
+    const matchesSearch =
+      t?.note?.toLowerCase().includes(search.toLowerCase()) || "";
 
     // Category
     const matchesCategory =
@@ -415,7 +410,7 @@ async function handleImportTransactions(
                 No data for chart
               </p>
             )}
-           
+
             <ExpenseChart transactions={transactions} />
             <AIInsights
               insight={insight}
@@ -424,8 +419,10 @@ async function handleImportTransactions(
             />
             <RecurringTransactions recurring={recurringTransactions} />
             <MonthlyAnalytics transactions={transactions} />
-             <PhonePePDFUpload setParsedTransactions={setParsedTransactions}
-  setShowPreview={setShowPreview}/>
+            <PhonePePDFUpload
+              setParsedTransactions={setParsedTransactions}
+              setShowPreview={setShowPreview}
+            />
             <ImportExport onImport={importTransactions} />
             <ExportButtons transactions={transactions} />
             <AddBudgetForm onAddBudget={handleAddBudget} />
@@ -440,17 +437,13 @@ async function handleImportTransactions(
         onSave={updateTransaction}
       />
       <AIChatWidget transactions={transactions} />
-    {showPreview && (
-  <PDFImportPreview
-    transactions={parsedTransactions}
-    onClose={() => setShowPreview(false)}
-    onImport={() =>
-      handleImportTransactions(
-        parsedTransactions,
-      )
-    }
-  />
-)}
+      {showPreview && (
+        <PDFImportPreview
+          transactions={parsedTransactions}
+          onClose={() => setShowPreview(false)}
+          onImport={() => handleImportTransactions(parsedTransactions)}
+        />
+      )}
     </div>
   );
 }

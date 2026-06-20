@@ -1,8 +1,10 @@
+"use client";
+
 import { extractPdfText } from "@/utils/pdfExtractor";
 import { parsePhonePeTransactions } from "@/utils/phonepeParser";
-import { useState } from "react";
+
 interface Props {
-  setParsedTransactions: (data: any[]) => void;
+  setParsedTransactions: any
   setShowPreview: (show: boolean) => void;
 }
 export default function PhonePePDFUpload({setParsedTransactions, setShowPreview}:Props) {
