@@ -19,10 +19,13 @@ import RecurringTransactions from "@/components/RecurringTransactions";
 import TransactionFilters from "@/components/TransactionFilters";
 import DashboardSkeleton from "@/components/DashboardSkeleton";
 import AIChatWidget from "@/components/chat/AIChatWidget";
+import PhonePePDFUpload from "@/components/PhonePePDFUpload";
 import toast from "react-hot-toast";
 
 import { detectRecurringTransactions } from "@/utils/detectRecurring";
 import { Transaction } from "@/types/transactions.type";
+import PDFImportPreview from "@/components/PDFImportPreview";
+import { convertPhonePeDate } from "@/utils/dateUtils";
 
 /**
  * Home - Main dashboard component for the budget tracker
@@ -45,6 +48,8 @@ export default function Home() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const recurringTransactions = detectRecurringTransactions(transactions);
+  const [parsedTransactions, setParsedTransactions] = useState([]);
+const [showPreview, setShowPreview] = useState(false);
   const [loading, setLoading] = useState(true);
   /**
    * Fetches all budgets for the current user from Supabase
@@ -78,7 +83,7 @@ export default function Home() {
       .from("transactions")
       .select("*")
       .eq("user_id", userId)
-      .order("created_at", { ascending: false });
+      .order("date", { ascending: false });
     setTransactions(data || []);
     setLoading(false);
   };
@@ -108,6 +113,38 @@ export default function Home() {
 
     fetchTransactions(user.id);
   }
+async function handleImportTransactions(
+  transactions: any[],
+) {
+  const { error } = await supabase
+    .from("transactions")
+    .insert(
+      transactions.map((t) => ({
+        amount: t.amount,
+        note: t.note,
+        type: t.type,
+        category: t.category,
+        date: convertPhonePeDate(t.date),
+        source: "phonepe",
+        user_id: user.id,
+      })),
+    );
+
+  if (error) {
+    console.error(error);
+    alert("Import failed");
+    return;
+  }
+
+  alert(
+    `${transactions.length} transactions imported successfully`,
+  );
+
+  setShowPreview(false);
+  setParsedTransactions([]);
+
+  fetchTransactions(user.id);
+}
   /**
    * Updates an existing transaction with new data
    * @param id - The ID of the transaction to update
@@ -307,7 +344,7 @@ export default function Home() {
   }
   const filteredTransactions = transactions.filter((t) => {
     // Search
-    const matchesSearch = t.note.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = t?.note?.toLowerCase().includes(search.toLowerCase())||"";
 
     // Category
     const matchesCategory =
@@ -378,6 +415,7 @@ export default function Home() {
                 No data for chart
               </p>
             )}
+           
             <ExpenseChart transactions={transactions} />
             <AIInsights
               insight={insight}
@@ -386,6 +424,8 @@ export default function Home() {
             />
             <RecurringTransactions recurring={recurringTransactions} />
             <MonthlyAnalytics transactions={transactions} />
+             <PhonePePDFUpload setParsedTransactions={setParsedTransactions}
+  setShowPreview={setShowPreview}/>
             <ImportExport onImport={importTransactions} />
             <ExportButtons transactions={transactions} />
             <AddBudgetForm onAddBudget={handleAddBudget} />
@@ -400,6 +440,17 @@ export default function Home() {
         onSave={updateTransaction}
       />
       <AIChatWidget transactions={transactions} />
+    {showPreview && (
+  <PDFImportPreview
+    transactions={parsedTransactions}
+    onClose={() => setShowPreview(false)}
+    onImport={() =>
+      handleImportTransactions(
+        parsedTransactions,
+      )
+    }
+  />
+)}
     </div>
   );
 }

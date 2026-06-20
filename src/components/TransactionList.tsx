@@ -30,7 +30,9 @@ export default function TransactionList({
 
   const groupedByMonth = transactions.reduce(
     (acc: Record<string, Transaction[]>, transaction) => {
-      const month = new Date(transaction.created_at).toLocaleString("default", {
+      const transactionDate = transaction.date || transaction.created_at;
+
+      const month = new Date(transactionDate).toLocaleString("default", {
         month: "long",
         year: "numeric",
       });
@@ -198,7 +200,7 @@ export default function TransactionList({
 
                                 <span className="text-xs text-gray-500">
                                   {new Date(
-                                    transaction.created_at,
+                                    transaction.date || transaction.created_at,
                                   ).toLocaleDateString()}
                                 </span>
                               </div>

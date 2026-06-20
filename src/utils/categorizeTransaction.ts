@@ -1,77 +1,57 @@
 export function categorizeTransaction(
-  note: string
-) {
-  const lower =
-    note.toLowerCase();
+  note: string,
+): string {
+  const lower = note.toLowerCase();
 
-  // FOOD
   if (
+    lower.includes("blinkit") ||
     lower.includes("zomato") ||
     lower.includes("swiggy") ||
-    lower.includes("food") ||
-    lower.includes("restaurant") ||
-    lower.includes("cafe")
+    lower.includes("foods") ||
+    lower.includes("kulfi") ||
+    lower.includes("namkeen") ||
+    lower.includes("kaleva")
   ) {
-    return {
-      category: "Food",
-      type: "expense",
-    };
+    return "Food";
   }
 
-  // TRAVEL
   if (
-    lower.includes("uber") ||
-    lower.includes("ola") ||
-    lower.includes("rapido") ||
-    lower.includes("metro") ||
-    lower.includes("travel")
-  ) {
-    return {
-      category: "Travel",
-      type: "expense",
-    };
-  }
-
-  // SHOPPING
-  if (
-    lower.includes("amazon") ||
     lower.includes("flipkart") ||
-    lower.includes("shopping") ||
-    lower.includes("myntra")
+    lower.includes("myntra") ||
+    lower.includes("supermart") ||
+    lower.includes("retail")
   ) {
-    return {
-      category: "Shopping",
-      type: "expense",
-    };
+    return "Shopping";
   }
 
-  // BILLS
   if (
     lower.includes("electricity") ||
-    lower.includes("wifi") ||
-    lower.includes("rent") ||
-    lower.includes("bill")
+    lower.includes("power corporation") ||
+    lower.includes("jio")
   ) {
-    return {
-      category: "Bills",
-      type: "expense",
-    };
+    return "Bills";
   }
 
-  // SALARY
   if (
-    lower.includes("salary") ||
-    lower.includes("credited") ||
-    lower.includes("income")
+    lower.includes("nps") ||
+    lower.includes("pension")
   ) {
-    return {
-      category: "Salary",
-      type: "income",
-    };
+    return "Investment";
   }
 
-  return {
-    category: "Other",
-    type: "expense",
-  };
+  if (
+    lower.includes("salon")
+  ) {
+    return "Personal Care";
+  }
+
+  if (
+    lower.includes("received") ||
+    lower.includes("ayushi jain") ||
+    lower.includes("pine labs")
+  ) {
+    return "Income";
+  }
+
+  return "Other";
 }
