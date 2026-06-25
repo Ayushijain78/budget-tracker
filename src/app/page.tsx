@@ -436,7 +436,7 @@ export default function Home() {
         onClose={() => setEditOpen(false)}
         onSave={updateTransaction}
       />
-      <AIChatWidget transactions={transactions} />
+      {/* <AIChatWidget transactions={transactions} /> */}
       {showPreview && (
         <PDFImportPreview
           transactions={parsedTransactions}

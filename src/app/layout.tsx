@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
@@ -30,6 +31,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <Script
+          src="https://cdn.jsdelivr.net/gh/Ayushijain78/copilot-panel/copilot-panel.js"
+          strategy="afterInteractive"
+        />
         {children}
         <Toaster position="top-right" reverseOrder={false} />
       </body>
