@@ -32,8 +32,8 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <Script
-          src="https://cdn.jsdelivr.net/gh/Ayushijain78/copilot-panel/copilot-panel.js"
-          strategy="afterInteractive"
+          src="https://cdn.jsdelivr.net/gh/Ayushijain78/copilot-panel@8857d51/copilot-panel.js"
+          data-api-url="/api/financial-chat"
         />
         {children}
         <Toaster position="top-right" reverseOrder={false} />

@@ -294,19 +294,18 @@ export default function Home() {
    * Runs once when the component is mounted
    */
   useEffect(() => {
-    const getUser = async () => {
-      const { data } = await supabase.auth.getUser();
+  const getUser = async () => {
+    const { data } = await supabase.auth.getUser();
+    if (data.user) {
+      setUser(data.user);
+      fetchTransactions(data.user.id);
+     
+    }
+    setLoading(false);
+  };
 
-      if (data.user) {
-        setUser(data.user);
-        fetchTransactions(data.user.id);
-      }
-
-      setLoading(false);
-    };
-
-    getUser();
-  }, []);
+  getUser();
+}, []);
 
   if (loading) {
     return (
